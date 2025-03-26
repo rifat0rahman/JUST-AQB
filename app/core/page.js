@@ -1,67 +1,54 @@
-import React from "react";
-import cloudinary from "@/lib/cloudinary";
-import { firestore } from "@/lib/firebase"; // Import Firebase Firestore from your Firebase setup
+"use client";
+import React, { use, useState } from "react";
+import { handleForm } from "./action"; // Import the server action
+import { dept } from "../dept";
 
 export default function Core() {
-  async function handleForm(formData) {
-    "use server";
+  const [isLoading, setIsLoading] = useState(false);
+  const [uploadsucces,setUploadsucess] = useState("");
+  const [bigpdf,setBigpdf] = useState("");
 
-    const pdf = formData.get("file");
-    const dept = formData.get("dept");
-    const session = formData.get("session");
-    const subject = formData.get("subject");
-    const teacher = formData.get("teacher");
-
-    if (!pdf || !dept || !session || !subject || !teacher) {
-      throw new Error("All fields are required!");
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+  
+    const file = formData.get("file"); // Get the uploaded file
+  
+    // Validate file size (5MB limit)
+    if (file && file.size > 5 * 1024 * 1024) {
+      setBigpdf("PDF should not be more than 5MB.");
+      return;
     }
-
+  
     try {
-      // Convert file to a buffer for Cloudinary upload
-      const fileBuffer = await pdf.arrayBuffer();
-      const fileStream = Buffer.from(fileBuffer);
-
-      // Upload PDF to Cloudinary
-      const uploadResponse = await new Promise((resolve, reject) => {
-        cloudinary.uploader.upload_stream(
-          { resource_type: "raw", folder: "questions", public_id: "just-aqb" },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
-          }
-        ).end(fileStream);
-      });
-
-      console.log("Cloudinary Upload Response:", uploadResponse.url);
-
-      // Prepare metadata for Firebase
-      const metadata = {
-        department: dept,
-        session,
-        subject,
-        teacher,
-        cloudinaryUrl: uploadResponse.secure_url,
-        cloudinaryId: uploadResponse.public_id,
-        uploadedAt: new Date().toISOString(),
-      };
-
-      // Save metadata to Firebase Firestore
-      const docRef = await firestore.collection("questions").add(metadata);
-
-      console.log("Data saved to Firebase with ID:", docRef.id);
+      setIsLoading(true);
+      setUploadsucess("");
+      setBigpdf(""); // Clear any previous messages
+      await handleForm(formData); // Call the server action
+      form.reset(); // Clear the form after successful submission
+      setUploadsucess("THANKS FOR MAKING JUNIOR'S LIFE EASY, YOU ARE A CHAMP!");
     } catch (error) {
-      console.error("Error:", error.message);
+      console.error("Error during form submission:", error.message);
+      setBigpdf("An error occurred while uploading.");
+    } finally {
+      setIsLoading(false);
     }
   }
+  
 
   return (
     <div>
-      <div className="mt-10 flex items-center justify-center">
+      <div className="m-6 text-center">
+        <h1 className="text-center font-bold">Contribute by uploading questions</h1>
+        <i className="text-center text-sm text-red-500">
+          N.B. we are currently taking only pdf
+        </i>
+      </div>
+      <div className="mt-5 flex items-center justify-center">
         <form
-          className="w-full max-w-md bg-white shadow-md rounded-lg p-4"
-          action={handleForm}
-          encType="multipart/form-data"
-          method="POST"
+          className="w-full max-w-md bg-white shadow-sm rounded-lg p-5"
+          onSubmit={handleSubmit} // Use the local handler
         >
           {/* File Input */}
           <div className="mb-4">
@@ -72,11 +59,12 @@ export default function Core() {
               Upload Question's PDF
             </label>
             <input
+              required
               type="file"
               id="file"
               name="file"
               accept=".pdf"
-              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="inputs block w-full text-sm"
             />
           </div>
 
@@ -89,14 +77,17 @@ export default function Core() {
               Select Department
             </label>
             <select
+              required
               id="dept"
               name="dept"
-              className="block w-full text-sm border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              className="inputs block w-full text-sm"
             >
               <option value="">-- Select --</option>
-              <option value="CSE">CSE</option>
-              <option value="EEE">EEE</option>
-              <option value="IPE">IPE</option>
+              {dept.map((dept, index) => (
+                <option value={dept} key={index}>
+                  {dept}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -109,14 +100,19 @@ export default function Core() {
               Select Question's Session
             </label>
             <select
+              required
               id="session"
               name="session"
-              className="block w-full text-sm border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              className="inputs block w-full text-sm"
             >
               <option value="">-- Select --</option>
               <option value="23-24">23-24</option>
               <option value="22-23">22-23</option>
               <option value="21-22">21-22</option>
+              <option value="20-21">20-21</option>
+              <option value="19-20">19-20</option>
+              <option value="18-19">18-19</option>
+              <option value="17-18">17-18</option>
             </select>
           </div>
 
@@ -126,14 +122,15 @@ export default function Core() {
               htmlFor="subject"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Question's Subject
+              Course Title
             </label>
             <input
+              required
               type="text"
               id="subject"
               name="subject"
-              placeholder="Subject here..."
-              className="block w-full text-sm border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Course title here..."
+              className="block w-full text-sm inputs"
             />
           </div>
 
@@ -146,23 +143,48 @@ export default function Core() {
               Teacher Name
             </label>
             <input
+              required
               type="text"
               id="teacher"
               name="teacher"
               placeholder="Teacher name here..."
-              className="block w-full text-sm border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              className="block w-full text-sm inputs"
             />
           </div>
 
           {/* Submit Button */}
           <div>
-            <button
-              type="submit"
-              className="w-full bg-green-700 text-white py-2 px-4 hover:bg-green-800"
-            >
-              Submit
-            </button>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={`shadow-md w-full rounded-md border p-1 ${
+              isLoading
+                ? "text-black-500 core_color cursor-not-allowed"
+                : "border-red-700 core_color"
+            }`}
+          >
+            {isLoading ? (
+              <div className="flex items-center justify-center space-x-2">
+                <div className="w-4 h-4 rounded-full animate-spin border-2 border-white-900 border-t-transparent"></div>
+                <span>Uploading...</span>
+              </div>
+            ) : (
+              "Upload"
+            )}
+          </button>
+
           </div>
+        {/* Success Message */}
+        {uploadsucces && (
+          <div className="mt-2 text-center text-green-600 font-semibold  text-[12px]">
+            {uploadsucces}
+          </div>
+        )}
+        {bigpdf && (
+          <div className="mt-2 text-center text-red-600 font-semibold  text-[12px]">
+            {bigpdf}
+          </div>
+        )}
         </form>
       </div>
     </div>
