@@ -27,7 +27,7 @@ export default function Core() {
       setBigpdf(""); // Clear any previous messages
       await handleForm(formData); // Call the server action
       form.reset(); // Clear the form after successful submission
-      setUploadsucess("THANKS FOR MAKING JUNIOR'S LIFE EASY, YOU ARE A CHAMP!");
+      setUploadsucess("THANKS FOR MAKING JUNIOR&apos;S LIFE EASY, YOU ARE A CHAMP!");
     } catch (error) {
       console.error("Error during form submission:", error.message);
       setBigpdf("An error occurred while uploading.");
@@ -56,7 +56,7 @@ export default function Core() {
               htmlFor="file"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Upload Question's PDF
+              Upload Question&apos;s PDF
             </label>
             <input
               required
@@ -97,7 +97,7 @@ export default function Core() {
               htmlFor="session"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Select Question's Session
+              Select Question&apos;s Session
             </label>
             <select
               required

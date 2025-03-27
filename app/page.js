@@ -25,14 +25,14 @@ export default function Home() {
           <div className="bg-white p-5 rounded-lg drop-shadow-lg">
             <p className="text-lg font-bold text-green-800 mb-3">COLLECT THE QUESTIONS</p>
             <p className="text-sm">
-              It's better to collect a fresh question. After collecting the question, take a photo of that single question.
+              It&apos;s better to collect a fresh question. After collecting the question, take a photo of that single question.
               Please try to take the photo as clear as you can.
             </p>
           </div>
           <div className="bg-white p-5 rounded-lg drop-shadow-lg">
             <p className="text-lg font-bold text-green-800 mb-3">MAKE PDF AND RESIZE</p>
             <p className="text-sm">
-              You may use one of the apps to make the photo to pdf. Don't make the pdf above <b className="text-red-500">5 mb</b>.
+              You may use one of the apps to make the photo to pdf. Don&apos;t make the pdf above <b className="text-red-500">5 mb</b>.
               To resize it you can use
               <Link href="https://www.ilovepdf.com/compress_pdf" target="_blank">
                 <i className="text-red-500"> ilovepdf </i>

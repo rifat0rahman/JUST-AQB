@@ -1,4 +1,5 @@
 "use client"
+import Image from "next/image";
 import "./globals.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -23,11 +24,13 @@ export default function RootLayout({ children }) {
             <div className="flex items-center justify-between h-16">
               {/* Logo Section */}
               <div className="flex-shrink-0 text-xl font-bold flex">
-                <img
-                  src="https://cse.just.edu.bd/img/just.jpg"
-                  className="w-10"
-                  alt="JUST Logo"
-                />
+
+              <Image
+  src="https://cse.just.edu.bd/img/just.jpg"
+  width={40}  // Adjust this to the size you need
+  height={40} // Adjust this to the size you need
+  alt="JUST Logo"
+/>
                 <p className="mt-2 ms-2 text-green-800">JUST AQB</p>
               </div>
 

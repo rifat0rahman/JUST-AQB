@@ -2,9 +2,12 @@
 const nextConfig = {
     experimental: {
       serverActions: {
-        bodySizeLimit: "10mb", // Set the desired size limit here
+        bodySizeLimit: "5mb", // Set the desired size limit here
       },
     },
+    images:{
+      domains: ['cse.just.edu.bd'],
+    }
   };
   
   export default nextConfig;
