@@ -1,7 +1,8 @@
 "use server";
 import cloudinary from "@/lib/cloudinary";
-import { firestore } from "@/lib/firebase";
-import { serverTimestamp } from "firebase/firestore";
+import { base } from "../dept";
+import axios from "axios";
+
 
 export async function handleForm(formData) {
 
@@ -10,40 +11,50 @@ export async function handleForm(formData) {
   const session = formData.get("session");
   const subject = formData.get("subject");
   const teacher = formData.get("teacher");
+  const contributor = formData.get("contributor");
 
   try {
-    // Convert file to a buffer for Cloudinary upload
-    const fileBuffer = await pdf.arrayBuffer();
-    const fileStream = Buffer.from(fileBuffer);
+    const { Readable } = require("stream");
 
-    // Upload PDF to Cloudinary
+    
+    const fileBuffer = Buffer.from(await pdf.arrayBuffer()); // Ensure this is a valid buffer
+
     const uploadResponse = await new Promise((resolve, reject) => {
-      cloudinary.uploader.upload_stream(
-        { resource_type: "raw", folder: "questions", public_id: dept + "-" + subject + "-" + teacher + "-" + session },
-        (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
-        }
-      ).end(fileStream);
+        const uploadStream = cloudinary.uploader.upload_stream(
+            { resource_type: "raw", folder: "questions", public_id: `${dept}-${subject}-${teacher}-${session}` },
+            (error, result) => (error ? reject(error) : resolve(result))
+        );
+
+        // ✅ Convert the Buffer into a Readable Stream and pipe it
+        Readable.from(fileBuffer).pipe(uploadStream);
     });
+
+    console.log("Upload successful:", uploadResponse);
+    
+
 
     console.log("Cloudinary Upload Response:", uploadResponse.url);
 
     const metadata = {
-      department: dept,
-      session,
-      subject,
-      teacher,
-      cloudinaryUrl: uploadResponse.secure_url,
-      cloudinaryId: uploadResponse.public_id,
-      uploadedAt: serverTimestamp(),
+      dept: dept,
+      session: session,
+      course_title: subject,
+      teacher: teacher,
+      contributor: contributor,
+      pdf: uploadResponse.secure_url,
     };
 
     // Save metadata to Firebase Firestore
-    const docRef = await firestore.collection("questions").add(metadata);
+    try {
+      const res = await axios.post(`${base}/createpdf/`, metadata);
+      console.log(res.data); // Log the actual response data
+    } catch (error) {
+        console.log(`${base}/createpdf/`);
+        console.error("Error creating PDF:", error.response?.data || error.message);
+    };
 
-    console.log("Data saved to Firebase with ID:", docRef.id);
-  } catch (error) {
+  }
+  catch (error) {
     console.error("Error:", error.message);
   }
 }

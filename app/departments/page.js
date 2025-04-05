@@ -6,8 +6,7 @@ export default function Departments() {
   const departments = dept;
 
   return (
-
-    <div className="p-6">
+    <div className="p-6 mt-5 sm:mt-4">
       <h1 className="text-2xl text-green-800 text-center font-bold mb-4">DEPARTMENTS</h1>
       <div className="flex flex-wrap gap-4 justify-center">
         {departments.map((department, index) => (

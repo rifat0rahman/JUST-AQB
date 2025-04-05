@@ -25,29 +25,31 @@ export default function Home() {
           <div className="bg-white p-5 rounded-lg drop-shadow-lg">
             <p className="text-lg font-bold text-green-800 mb-3">COLLECT THE QUESTIONS</p>
             <p className="text-sm">
-              It&apos;s better to collect a fresh question. After collecting the question, take a photo of that single question.
-              Please try to take the photo as clear as you can.
+              It is recommended to collect a fresh question. Once you have the question, 
+              please take a clear photo of that specific question only. 
+              Ensure the image is as sharp and legible as possible.
             </p>
           </div>
           <div className="bg-white p-5 rounded-lg drop-shadow-lg">
             <p className="text-lg font-bold text-green-800 mb-3">MAKE PDF AND RESIZE</p>
             <p className="text-sm">
-              You may use one of the apps to make the photo to pdf. Don&apos;t make the pdf above <b className="text-red-500">5 mb</b>.
-              To resize it you can use
+            You may use one of the available apps to convert the photo to a PDF. 
+            Please ensure the final file size does not exceed <b className="text-red-500">5 MB</b>. 
+            If resizing is necessary, you can use tools such as
               <Link href="https://www.ilovepdf.com/compress_pdf" target="_blank">
                 <i className="text-red-500"> ilovepdf </i>
               </Link>
               or
               <Link href="https://pdfresizer.com/resize" target="_blank">
-                <i className="text-red-500"> pdfresizer</i>
+                <i className="text-red-500"> pdfresizer </i>
               </Link>.
             </p>
           </div>
           <div className="bg-white p-5 rounded-lg drop-shadow-lg">
             <p className="text-lg font-bold text-green-800 mb-3">ADDRESS THE QUESTION</p>
             <p className="text-sm">
-              Please kindly write properly the course title, faculty, and the session
-              of the question. So students do not waste time in super PL.
+            Kindly ensure that the course title, faculty, and session are clearly written on the uploading form. 
+            This will help students avoid wasting time in Super PL.
             </p>
           </div>
         </div>

@@ -26,20 +26,17 @@ export default function Core() {
       setUploadsucess("");
       setBigpdf(""); // Clear any previous messages
       await handleForm(formData); // Call the server action
-      form.reset(); // Clear the form after successful submission
-      setUploadsucess("THANKS FOR MAKING JUNIOR&apos;S LIFE EASY, YOU ARE A CHAMP!");
+      setUploadsucess("THANKS FOR MAKING JUNIOR'S LIFE EASY, YOU ARE A CHAMP!");
     } catch (error) {
-      console.error("Error during form submission:", error.message);
       setBigpdf("An error occurred while uploading.");
     } finally {
       setIsLoading(false);
     }
   }
-  
 
   return (
     <div>
-      <div className="m-6 text-center">
+      <div className="mt-10 sm:mt-5 text-center">
         <h1 className="text-center font-bold">Contribute by uploading questions</h1>
         <i className="text-center text-sm text-red-500">
           N.B. we are currently taking only pdf
@@ -51,7 +48,7 @@ export default function Core() {
           onSubmit={handleSubmit} // Use the local handler
         >
           {/* File Input */}
-          <div className="mb-4">
+          <div className="mb-2">
             <label
               htmlFor="file"
               className="block text-sm font-medium text-gray-700 mb-2"
@@ -69,7 +66,7 @@ export default function Core() {
           </div>
 
           {/* Select Department */}
-          <div className="mb-4">
+          <div className="mb-2">
             <label
               htmlFor="dept"
               className="block text-sm font-medium text-gray-700 mb-2"
@@ -92,7 +89,7 @@ export default function Core() {
           </div>
 
           {/* Select Session */}
-          <div className="mb-4">
+          <div className="mb-2">
             <label
               htmlFor="session"
               className="block text-sm font-medium text-gray-700 mb-2"
@@ -117,7 +114,7 @@ export default function Core() {
           </div>
 
           {/* Input Subject */}
-          <div className="mb-4">
+          <div className="mb-2">
             <label
               htmlFor="subject"
               className="block text-sm font-medium text-gray-700 mb-2"
@@ -135,7 +132,7 @@ export default function Core() {
           </div>
 
           {/* Input Teacher */}
-          <div className="mb-4">
+          <div className="mb-2">
             <label
               htmlFor="teacher"
               className="block text-sm font-medium text-gray-700 mb-2"
@@ -148,6 +145,22 @@ export default function Core() {
               id="teacher"
               name="teacher"
               placeholder="Teacher name here..."
+              className="block w-full text-sm inputs"
+            />
+          </div>
+
+          <div className="mb-2">
+            <label
+              htmlFor="contributor"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
+              Contributor Name
+            </label>
+            <input
+              type="text"
+              id="contributor"
+              name="contributor"
+              placeholder="Contributor name here..."
               className="block w-full text-sm inputs"
             />
           </div>

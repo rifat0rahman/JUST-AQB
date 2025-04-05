@@ -36,6 +36,18 @@ body {
   border: rgba(190, 3, 3, 0.642) 1px solid;
   transition: .5s ease;
 }
+.inputs-dept{
+  border:rgb(197, 197, 197) 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+}
+.inputs-dept:focus{
+  outline: none;
+  border: rgba(190, 3, 3, 0.642) 1px solid;
+  transition: .5s ease;
+}
+
+
 .core_color{
   border: rgba(190, 3, 3, 0.755) 1px solid;
 }
