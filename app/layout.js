@@ -18,6 +18,7 @@ export default function RootLayout({ children }) {
     }, [pathname]); 
   return (
     <html lang="en" data-arp="">
+      <title>{pathname.split("/").pop()}</title>
       <body>
         <div>
         <nav className="w-full">

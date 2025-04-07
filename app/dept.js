@@ -29,4 +29,5 @@ export const dept = [
     "English",
   ];
 
-export const base = 'http://127.0.0.1:8000';
+// export const base = 'http://127.0.0.1:8000';
+export const base = 'https://justaqb.pythonanywhere.com';
