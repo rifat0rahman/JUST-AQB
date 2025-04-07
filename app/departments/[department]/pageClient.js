@@ -19,7 +19,7 @@ export default function DepartmentPageClient({ pdfs,department }) {
       <p className="text-2xl text-green-800 text-center font-bold mb-4">
         DEPARTMENT OF {department}
       </p>
-      <div className="w-100 p-3 sm:p-3 m-auto text-center">
+      <div className="w-[100%] sm:w-100 p-3 sm:p-3 m-auto text-center">
       <div className="mb-2">
             <label
               htmlFor="session"
