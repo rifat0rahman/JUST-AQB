@@ -72,9 +72,9 @@ export default function DepartmentPageClient({ pdfs,department }) {
                   </svg>
                   </Link>
                   <span className="text-[10px] me-2 bg-yellow-400 p-[3px] rounded-sm">{file.teacher}</span>
-                  <span className="text-[10px] me-2 bg-green-400 p-[3px] rounded-sm">Semester</span>
+                  <span className="text-[10px] me-2 bg-green-400 p-[3px] rounded-sm">{file.semester}</span>
                   <span className="text-[10px] me-2 bg-violet-500 text-white p-[3px] rounded-sm">{department}</span>
-                  <span className="text-[10px] me-2 bg-gray-500 text-white p-[3px] rounded-sm">{file.contributor}</span>
+                  <span className="text-[10px] me-2 bg-gray-500 text-white p-[3px] rounded-sm">Contributor-{file.contributor}</span>
 
                 </div>
             </div>

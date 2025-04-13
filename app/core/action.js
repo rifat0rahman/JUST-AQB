@@ -9,6 +9,7 @@ export async function handleForm(formData) {
   const pdf = formData.get("file");
   const dept = formData.get("dept");
   const session = formData.get("session");
+  const semester = formData.get("semester");
   const subject = formData.get("subject");
   const teacher = formData.get("teacher");
   const contributor = formData.get("contributor");
@@ -38,6 +39,7 @@ export async function handleForm(formData) {
     const metadata = {
       dept: dept,
       session: session,
+      semester:semester,
       course_title: subject,
       teacher: teacher,
       contributor: contributor,

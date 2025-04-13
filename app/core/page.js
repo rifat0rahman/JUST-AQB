@@ -27,6 +27,7 @@ export default function Core() {
       setBigpdf(""); // Clear any previous messages
       await handleForm(formData); // Call the server action
       setUploadsucess("THANKS FOR MAKING JUNIOR'S LIFE EASY, YOU ARE A CHAMP!");
+      form.reset();
     } catch (error) {
       setBigpdf("An error occurred while uploading.");
     } finally {
@@ -88,11 +89,12 @@ export default function Core() {
             </select>
           </div>
 
-          {/* Select Session */}
-          <div className="mb-2">
+        {/* Select Session */}
+        <div className="flex flex-col md:flex-row gap-6 w-full mb-2">
+          <div className="w-full md:flex-1">
             <label
               htmlFor="session"
-              className="block text-sm font-medium text-gray-700 mb-2"
+              className="block text-sm font-medium text-gray-700"
             >
               Select Question&apos;s Session
             </label>
@@ -112,6 +114,34 @@ export default function Core() {
               <option value="17-18">17-18</option>
             </select>
           </div>
+
+            {/* select semester */}
+          <div className="w-full md:flex-1">
+            <label
+              htmlFor="semester"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Select Question&apos;s Semester
+            </label>
+            <select
+              required
+              id="semester"
+              name="semester"
+              className="inputs block w-full text-sm"
+            >
+              <option value="">-- Select --</option>
+              <option value="1-1">1-1</option>
+              <option value="1-2">1-2</option>
+              <option value="2-1">2-1</option>
+              <option value="2-2">2-2</option>
+              <option value="3-1">3-1</option>
+              <option value="3-2">3-2</option>
+              <option value="4-1">4-1</option>
+              <option value="4-2">4-2</option>
+            </select>
+          </div>
+        </div>
+
 
           {/* Input Subject */}
           <div className="mb-2">
